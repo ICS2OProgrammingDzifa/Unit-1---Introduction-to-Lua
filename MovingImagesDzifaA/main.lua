@@ -54,7 +54,8 @@ Runtime:addEventListener("enterFrame", MoveShip)
  -- Function: MoveGirl5
 -- Input: this function accepts an event listener
 -- Output: none
--- Description: This function adds the scroll speed to the x-value of the girl
+-- Description: This function adds the scroll speed to the
+-- x-value of the girl
 local function MoveGirl5(event)
 	 -- add the scroll speed to the x-value of the girl
 	 girl5.x = girl5.x - scrollSpeed
