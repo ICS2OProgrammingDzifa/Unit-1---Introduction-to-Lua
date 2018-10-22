@@ -6,7 +6,9 @@
 -- terminal.
 -----------------------------------------------------------------------------------------
 
-
+-- Correct sound
+local SpringSoundEffect = audio.loadSound( "Sounds/SpringSoundEffect.mp3" ) -- Setting a variable to an mp3 file
+local SpringSoundEffectChannel
 -- print "Hello, World"  to the command terminal 
 print ("***Helloooooooooooooo!")
 print ("***This is awesome!")
@@ -23,7 +25,7 @@ print ("***This is awesome!")
   -- displays text on the screen at the position x = 500 and y = 500 with
   -- a deafult font style and font size of 50
    textObject = display.newText( "Hello, Dzifa!", 500, 500, nil, 90)
-
+   SpringSoundEffect = audio.play(SpringSoundEffect)
    -- sets the color of the text
    textObject:setTextColor( 0/255, 0/255, 102/255)
  
@@ -36,4 +38,3 @@ print ("***This is awesome!")
 
    -- sets the color of the text
    textObject:setTextColor( 153/255, 255/255, 204/255)
- 

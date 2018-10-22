@@ -4,6 +4,12 @@
 -- Course: ICS20/3C
 -- This program displays a red button when the blue button is clicked.
 -------------------------------------------------------------------------
+-- SOUNDS
+-------------------------------------------------------------------------
+
+-- Correct sound
+local cashSound = audio.loadSound( "Sound/cash.mp3" ) -- Setting a variable to an mp3
+local cashSoundChannel
 
 -- set background colour
 display.setDefault ("background", 255/255, 230/255, 255/255)
@@ -26,9 +32,9 @@ redButton.isVisible = false
 
 -- create checkmark, set its position and make it visible
 local checkmark = display.newImageRect("Images/checkmark.png", 198, 96)
-checkmark.x = 150
-checkmark.y = 100
-checkmark.isVisible = true 
+checkmark.x = 250
+checkmark.y = 450
+checkmark.isVisible = false
 
 -- create text object, set its position and make it invisible
 local textObject = display.newText ("Clicked!", 0, 0, nil, 50)
@@ -49,13 +55,11 @@ local function  BlueButtonListener(touch)
 		blueButton.isVisible = false
 		redButton.isVisible = true
 		textObject.isVisible = true
+		checkmark.isVisible = true
 	end
 
-	if(touch.phase == "ended") then
-		redButton.isVisible = false
-		blueButton.isVisible = true
-		textObject.isVisible = false
-	end
+	
+
 end
 
 
@@ -69,40 +73,20 @@ blueButton:addEventListener("touch", BlueButtonListener)
 -- Description: when Red button is clicked, it will make the text 
 -- appear with the blue button,and make the red button disapear
 local function  RedButtonListener(touch)
-	if (touch.phase == "began") then
-		redButton.isVisible = true
-		redButton.isVisible = false
-		textObject.isVisible = false
-	end
 
-	if(touch.phase == "ended") then
-		blueButton.isVisible = false
-		redButton.isVisible = true
+
+	if (touch.phase == "ended") then
+		cashSoundChannel = audio.play(cashSound)
+		blueButton.isVisible = true
+		redButton.isVisible = false
+		checkmark.isVisible = false
+		textObject.isVisible = false
 	end
 end
 
 
 -- add the respective listeners to each object
-blueButton:addEventListener("touch", BlueButtonListener)
-
-
--- function: checkmarkListener
--- Input: touch listener
--- Output: none 
--- Description: when red button is clicked, it will make the text appear with the red button
-local function CheckMarkListenser(touch)
-	if (touch.phase == "began") then
-		checkmark.isVisible = true
-		checkmark.isVisible = true
-		checkmark.isVisible = true
-	end
-	
-	if (touch.phase == "ended")	then 
-	    checkmark.isVisible = true 
-	    checkmark.isVisible = true
-	    textObject.isVisible = false 
-	end
-end
+redButton:addEventListener("touch", RedButtonListener)
 
 
 
