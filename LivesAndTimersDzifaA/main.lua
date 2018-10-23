@@ -234,7 +234,7 @@ ocal function UpdateHearts()
 end
 
 
-
+delrete this when you get home
 
 -- display a question and sets the colour 
 questionObject = display.newText( "", display.contentWidth/3, display.contentHeight/1.5, nil, 70 )
