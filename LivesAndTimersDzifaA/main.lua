@@ -11,6 +11,10 @@ display.setStatusBar(display.HiddenStatusBar)
 -- sets the background colour
 display.setDefault("background", 255/255, 229/255,  255/255)
 
+----------------------------------------------------------------------------------------++=
+-- LOCAL VARIABLES
+----------------------------------------------------------------------------------------
+
 -- variables for the timer
 local totalSeconds = 10
 local secondsLeft = 10
@@ -22,11 +26,6 @@ local heart1
 local heart2
 local heart3
 local heart4
-
-
-----------------------------------------------------------------------------------------++=
--- LOCAL VARIABLES
-----------------------------------------------------------------------------------------
 
 -- create local variables
 local questionObject
@@ -51,6 +50,8 @@ local correctSound = audio.loadSound( "Sounds/correctSound.mp3" ) -- Setting a v
 local correctSoundChannel
 local wrongSound = audio.loadSound( "Sounds/wrongSound.mp3" ) -- Setting a variable to an mp3 file
 local wrongSoundChannel
+local gameSound = audio.loadSound("Sounds/game.mp3")
+local gameSoundChannel 
 
 ---------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -64,7 +65,7 @@ local function UpdateTime()
 	clockText.text = secondsLeft .. ""
 
 	if (secondsLeft == 0 ) then
-		-- reset the number of seconds left
+		-- It makes the seconds equal to the total amount of seconds left.
 		secondsLeft = totalSeconds
 		lives = lives - 1
 
@@ -73,11 +74,11 @@ local function UpdateTime()
 		-- AND CANCEL THE TIMER REMOVE THE THIRD HEART BY MAKING IT INVISIBLE
 		if (lives == 2) then
 			heart2.isVisible = false
-		elseif (lives == 1) then
-		    heart1.isVisible = false
-		end
+			elseif (lives == 1) then
+				heart1.isVisible = false
+			end
 
-	    -- *** CALL THE FUNCTION TO ASK A NEW QUESTION
+		   -- *** CALL THE FUNCTION TO ASK A NEW QUESTION
 	end
 end
 
@@ -87,12 +88,55 @@ local function startTimer()
 	countDownTimer = timer.performWithDelay( 1000, UpdateTime, 0)
 end
 
+local function UpdateHearts()
+	if (lives == 4) then
+   			heart1.isVisible = true
+   			heart2.isVisible = true
+   			heart3.isVisible = true
+   			heart4.isVisible = true
 
 
+   		elseif (lives == 3) then
+   			heart1.isVisible = true
+   			heart2.isVisible = true
+   			heart3.isVisible = true
+   			heart4.isVisible = false
 
----------------------------------------------------------------------------------------
--- LOCAL FUNCTIONS
----------------------------------------------------------------------------------------
+		
+   		elseif (lives == 2) then
+   			heart1.isVisible = true
+   			heart2.isVisible = true
+   			heart3.isVisible = false
+   			heart4.isVisible = false
+
+
+   		elseif (lives == 1) then
+   			heart1.isVisible = true
+   			heart2.isVisible = false
+   			heart3.isVisible = false
+   			heart4.isVisible = false
+
+
+   		elseif (lives == 0) then
+   			heart1.isVisible = false
+   			heart2.isVisible = false
+   			heart3.isVisible = false
+   			heart4.isVisible = false
+
+   			gameOver.isVisible = true
+   			gameSoundChannel = audio.play(gameSound)
+   			lives = lives - 1
+   			UpdateHearts()
+   			clockText.isVisible = false
+   			incorrectObject.isVisible = false
+   			
+
+   			numericField.isVisible = false
+   			pointsTextObject.isVisible = false
+   			questionObject.isVisible = false
+   		end
+end
+
 
 local function AskQuestion()
 	-- generate 2 random numbers between a max. and a min. number
@@ -153,6 +197,7 @@ local function NumericFieldListener( event )
 			-- if the users answer and the correct answer are the same:
 			if (userAnswer == correctAnswer) then
 				correctObject.isVisible = true		
+				UpdateTime()
 
 				correctSoundChannel = audio.play(correctSound)	
 				timer.performWithDelay(2000, HideCorrect)
@@ -164,15 +209,17 @@ local function NumericFieldListener( event )
 			-- If the users answer is incorrect, Incorrect is displayed
 			else			
 				incorrectObject.isVisible = true
-				wrongSoundChannel = audio.play(wrongSound)	
+				wrongSoundChannel = audio.play(wrongSound)
+				lives = lives - 1
+				UpdateHearts()	
 				timer.performWithDelay(2000, HideIncorrect)
-
 
 			end
 
 		event.target.text = ""
      end
 end
+
 
 ---------------------------------------------------------------------
 -- OBJECT CREATION
@@ -188,53 +235,17 @@ heart2.x = display.contentWidth * 6 / 8
 heart2.y = display.contentHeight * 1 / 7
 
 heart3 = display.newImageRect("Images/heart.png", 100, 100)
-heart3.x = display.contentWidth * 4 / 8
+heart3.x = display.contentWidth * 5 / 8
 heart3.y = display.contentHeight * 1 / 7
 
 heart4 = display.newImageRect("Images/heart.png", 100, 100)
-heart4.x = display.contentWidth * 5 / 8
+heart4.x = display.contentWidth * 4 / 8
 heart4.y = display.contentHeight * 1 / 7
 
-ocal function UpdateHearts()
- if (lives == 4) then
-      heart1.isVisible = true
-      heart2.isVisible = true
-      heart3.isVisible = true
-      heart4.isVisible = true
-
-     elseif (lives == 3) then
-      heart1.isVisible = true
-      heart2.isVisible = true
-      heart3.isVisible = true
-      heart4.isVisible = false
-  
-     elseif (lives == 2) then
-      heart1.isVisible = true
-      heart2.isVisible = true
-      heart3.isVisible = false
-      heart4.isVisible = false
-
-     elseif (lives == 1) then
-      heart1.isVisible = true
-      heart2.isVisible = false
-      heart3.isVisible = false
-      heart4.isVisible = false
-
-     elseif (lives == 0) then
-      heart1.isVisible = false
-      heart2.isVisible = false
-      heart3.isVisible = false
-      heart4.isVisible = false
-      gameOver.isVisible = true
-      buddySoundChannel = audio.play(buddySound)
-      numericField.isVisible = false
-      pointsTextObject.isVisible = false
-      questionObject.isVisible = false
-     end
-end
-
-
-delrete this when you get home
+gameOver = display.newImageRect("Images/gameOver.png", display.contentWidth, display.contentHeight)
+gameOver.anchorX = 0
+gameOver.anchorY = 0
+gameOver.isVisible = false
 
 -- display a question and sets the colour 
 questionObject = display.newText( "", display.contentWidth/3, display.contentHeight/1.5, nil, 70 )
@@ -263,11 +274,15 @@ numericField.inputType = "default"
 -- add the event listener for the numeriuc field
 numericField:addEventListener("userInput", NumericFieldListener )
 
+-- add a clock
+clockText = display.newText(secondsLeft, 100, 650, native.systemFontBold, 100)
+clockText:setFillColor( 0/255, 0/255, 153/255 )
+
+
 -------------------------------------------------------------------------------------
 -- FUNCTION CALLS
 -------------------------------------------------------------------------------------
 
 -- call the function to ask question
 AskQuestion()
-
-
+startTimer()
