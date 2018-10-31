@@ -37,6 +37,7 @@ local incorrectObject
 local incorrectAnswer
 local randomOperater
 local numberPoints = 0
+local pointsTextObject
 
 
 ---------------------------------------------------------------------------------------

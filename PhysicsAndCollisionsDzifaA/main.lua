@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------------------------
 
---Title: Interacting Objects 2
+--Title: Physics And Collisions
 --Name: Dzifa Agbenyoh
 --Course: ICS3C
 --This program displays different sized balls falling on a beam.
@@ -89,8 +89,8 @@ local function firstBall()
     local ball1 = display.newImage("Images/super_ball.png", 0, 0)
 
 	--add to physics
- 	physics.addBody(ball1, {density=2.0, friction=1.5, bounce=0.3, radius=25})
- 	ball1:scale(1, 1)
+ 	physics.addBody(ball1, {density=2.0, friction=1.5, bounce=0.3, radius=50})
+ 	ball1:scale(2, 2)
 end
 
 -----------------------------------------------------------------
@@ -100,7 +100,7 @@ local function secondBall()
 	local ball2 = display.newImage("Images/super_ball.png", 0, 0)
 
 	-- adding to physics
-	physics.addBody(ball2, {density=1.0, friction=0.5, bounce=0.4, raduis=3})
+	physics.addBody(ball2, {density=1.0, friction=0.5, bounce=0.4, raduis=12.5})
 	ball2:scale(0.5, 0.5)
 end
 
@@ -109,10 +109,11 @@ end
 local function thirdBall()
 	-- creating third ball
 	local ball3 = display.newImage("Images/super_ball.png", 0, 0)
-	ball3:scale(2, 2)
+	
 	
 	--add to physics
-	physics.addBody(ball3, {density=1,7, friction=5.5, bounce=0.4, radius=50})
+	physics.addBody(ball3, {density=1,7, friction=5.5, bounce=0.4, radius=100})
+	ball3:scale(4, 4)
 end
 
 --------------------------------------------------------------------------------------------------------------
@@ -120,10 +121,11 @@ end
 local function fourthBall()
 	-- creating fourth ball
 	local ball4 = display.newImage("Images/super_ball.png", 0, 0)
-	ball4:scale(4, 4)
+	
 	
 	--add to physics
-	physics.addBody(ball4, {density=2,0, friction=0.7, bounce=0.7, radius=100})
+	physics.addBody(ball4, {density=1,0, friction=0.7, bounce=0.7, radius=200})
+	ball4:scale(4, 4)
 end
 
 --------------------------------------------------------------------------------------------------------------
@@ -133,7 +135,7 @@ local function fifthBall()
 	local ball5 = display.newImage("Images/super_ball.png", 0, 0)
 
 	--add to physics
-	physics.addBody(ball5, {density=2,0, friction=0.8, bounce=0.8, radius=200})
+	physics.addBody(ball5, {density=2,0, friction=0.8, bounce=0.8, radius=150})
 	ball5:scale(6, 6)
 end
 
@@ -144,7 +146,7 @@ local function sixthBall()
 	local ball6 = display.newImage("Images/super_ball.png", 0, 0)
 
 	--add to physics
-	physics.addBody(ball6, {density=4,0, friction=0.8, bounce=0.2, radius=200})
+	physics.addBody(ball6, {density=4,0, friction=0.8, bounce=0.2, radius=275})
 	ball6:scale(5.5, 5.5)
 end
 
@@ -156,7 +158,7 @@ local function seventhBall()
 
 	--add to physics
 	physics.addBody(ball7, {density=1,0, friction=0.8, bounce=0.7, radius=200})
-	ball7:scale(7, 7)
+	ball7:scale(4, 4)
 end
 
 ----------------------------------------------------------------------------------------------------------------
