@@ -5,6 +5,10 @@
 -- This program places a random object on the screen. If the user clicks on it in time
 -- the score increases by 1.
 -----------------------------------------------------------------------------------------
+-- make a blop sound
+local blop = audio.loadSound("Sounds/blop.mp3")
+local blopSoundChannel 
+
 -- Make local Variables
 
  local numberPoints = 0
@@ -77,6 +81,7 @@ function Whacked( event )
 
 	-- If touch phase just started 
 	if (event.phase == "began") then
+		blopSoundChannel = audio.play(blopSound)
 		numberPoints = numberPoints + 1
 		pointsTextObject.text = "Points = ".. numberPoints
 	   Hide()
